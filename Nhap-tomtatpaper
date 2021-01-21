@@ -1,0 +1,84 @@
+I/ Các câu hỏi nghiên cứu chính
+1. Đưa ra dự đoán giá mở cửa ngày tiếp theo của CP có dữ liệu lịch sử giá
+2. Xác định các nhận tố quyết định chính cũng như nhân tố phụ trợ trong sự ảnh hưởng đến giá dự đoán
+2. Long Short Term Memory (LSTM) model: The LSTM has been one of the most
+popular models for time series prediction in recent years. Its output at time t depends on the
+input at time t and its previous hidden states
+
+
+II/ Phương pháp tiếp cận
+Đề xuất 1 mô hình Long Short Term  Memory đa đầu vào mới để phân biệt nhân tố chủ đạo (mainstream) và các nhân tố phụ
+Thiết kế thêm cổng nhận tín hiệu được điều khiển bởi chính maintream và các trạng thái ẩn từ phía trước cho nhân tố chủ đạo (mainstream) và các nhân tố phụ
+Cổng input đóng vai trò như bộ lọc dữ liệu từ cả nhân tố chủ đạo và các nhân tố phụ, chúng tạo ra các ô nhớ đầu vào và hợp nhất chúng trước khi cập nhật trạng thái ô nhớ
+
+Ứng dụng cơ chế Attention để gán các trong số khác nhau. 
+Sử dụng cơ chế Attention để tính toán trọng số cho sự kết hợp của các đầu vào ô khác nhau
+dựa trên đầu vào ô và trạng thái ô trước đó. Trọng lượng Attention được học thích ứng
+thông qua quá trình đào tạo.
+III/ Kết quả nghiên cứu đạt được
+1. Tìm ra được khả năng sử dụng của các cổ phiếu liên quan và 
+sử dụng giá của các cổ phiếu liên quan để dự đoán giá tương lai cho cổ phiếu mục tiêu.
+ 
+2. Đề xuất mô hình mới cho phép mainstream quyết định việc sử dụng các nhân tố khác và 
+sử dụng cơ chế Attention 2 giai đoạn trên các ô nhớ đầu vào khác nhau và trạng thái ẩn của các bước thời gian khác nhau 
+để cải thiện độ chính xác của dự đoán.
+
+3. So sánh mô hình đề xuất với các mô hình SOTA khác và đánh giá hiệu quả của MI-LSTM 
+trên dữ liệu chứng khoán từ thị trường chứng khoán Trung Quốc. 
+MI-LSTM đạt được sự cải thiện 9,96% so với LSTM về trung bình bình phương sai số.
+
+
+
+
+IV/ Các nghiên cứu trước đó
+
+1. Về dự đoán giá cổ phiếu.
+Dự đoán giá cổ phiếu luôn là một nhiệm vụ đầy thách thức vì sự biến động của thị trường chứng khoán theo ADAM et al. (2016).
+Nhiều nỗ lực đã được thực hiện bằng cách sử dụng các loại thuật toán học máy truyền thống khác nhau:
+
+(1)Chen và Hao (2017); Luo và cộng sự. (2017) đã áp dụng WSVM, là một loại biến thể của support vector machine 
+nhưng cho phép gán trọng số cho các feature hoặc mẫu khác nhau. 
+(2) mô hình hồi quy tự(AR) là một phương pháp được sử dụng rộng rãi khác để dự đoán chuỗi thời gian. 
+Adebiyi và cộng sự. (2014); Xiao và cộng sự. (2014) đã sử dụng cả đường trung bình động tích hợp hồi quy tự động (ARIMA)
+ và mô hình NN để dự đoán thị trường chứng khoán nhằm so sánh hoạt động của các mô hình khác nhau.
+ Trong Chang và Lee (2017), quy trình quyết định Markov và các thuật toán di truyền được thực hiện để thiết kế chiến lược
+ thị trường chứng khoán. 
+ Các công trình nói trên có xu hướng tập trung vào việc suy ra các yếu tố từ dữ liệu số ban đầu. 
+ Để có thêm thông tin, Jin et al. (2017); Nguyen et al. (2015); Bordino và cộng sự. (2014); Ming và cộng sự. (2014) 
+ đã biến dữ liệu văn bản được thu thập từ phương tiện truyền thông xã hội thành vectơ và sử dụng chúng như các tính năng bổ sung. 
+ 
+ Ngoài những nỗ lực về phương pháp học máy truyền thống, mạng nơ-ron ngày càng đóng vai trò quan trọng hơn trong những năm gần đây.
+
+
+
+2. Neural Network và  SOTA trong dự đoán dữ liệu chuỗi: LSTM
+Mạng nơron, tính chất phức tạp và phi tuyến tính của chúng, đã được ứng dụng thành công trong nhiều lĩnh vực. 
+Để giải quyết các vấn đề về "chuỗi thời gian", mạng (RNN) với kiến trúc nhận output của hidden layer của bước thời gian trước đó
+ kết hợp với input hiện tại đã được sử đụng rộng rãi
+Do cấu trúc hồi tiếp, RNN sử dụng một
+thuật toán backpropagation qua thời gian (BPTT) Werbos (1990) để cập nhật trọng số node.
+
+Trong lĩnh vực tài chính, Rather et al. (2015) đã sử dụng  RNN và thuật toán di truyền (genetic algorithms) để tính toán
+lợi nhuận cổ phiếu. 
+Tuy nhiên, Bengio et al. (1994) chỉ ra rằng RNN truyền thống  gặp khó khăn trong việc dữ thông tin dài hạn vì Vanishing Gradien.
+Do đó hiệu suất RNNs bị hạn chế cho đến khi Hochreiter và Schmidhuber (1997) lần đầu tiên đề xuất
+(LSTM) lưu trữ thông tin dài hạn  ở các trạng thái ô bổ sung và sử dụng các cổng để kiểm soát luồng thông tin vào hoặc ra.
+Kể từ đó, RNN truyền thống được thay thế bằng LSTM hoặc (GRU), là một cách tiếp cận khác để đối phó với sự phụ thuộc lâu dài. 
+Dựa trên LSTM, Zhang et al. (2017) đã sử dụng biến đổi fourier rời rạc (DFT) để phân tách đầu ra của các hidden unit để bắt các mẫu đa tần. 
+Bên cạnh RNNs, Ding et al. (2015) đã sử dụng nơ-ron phức hợp mạng (CNN) để mô hình hóa cả sự phụ thuộc ngắn hạn và dài hạn.
+
+Sepp Hochreiter and Jrgen Schmidhuber. Long short-term memory. Neural Computation,
+9(8):1735–1780, 1997.
+
+
+3. Cơ chế attention
+Việc gán trọng số chú ý trên mạng nơ-ron đã đạt được thành công lớn trong các tác vụ học máy khác nhau.
+Trong dịch máy, mục tiêu là dịch một câu đã cho sang một câu mới bằng ngôn ngữ khác. 
+Tất nhiên, các từ khác nhau trong câu gốc phải có tầm quan trọng khác nhau trong khi tạo ra các từ khác nhau trong câu đích.
+
+Kể từ thành công lớn mà Bahdanau et al. (2014) đã sử dụng RNN dựa trên sự chú ý để gán trọng số Attention trên các hidden output khác nhau tương ứng với các từ khác nhau, 
+việc sử dụng Attention đã trở nên phổ biến :
+
+Trong lĩnh vực bênh án điện tử (EHRs), Ma et al. (2017) đã giới thiệu ba loại Attention tạm thời trên các bước thời gian khác nhau. 
+Đối với hệ khuyến nghị, Wang et al. (2017) đ gán Attention trong nhiều Neural Network
+và Chen et al. (2017a) đã sử dụng Attention kiến thức cơ bản ể sử dụng kiến thức chuyên ngành.
